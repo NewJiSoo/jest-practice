@@ -4,7 +4,6 @@ describe("HTML 엔터티 변환 메서드", () => {
   const common = "fred, barney, pebbles";
   describe("escape", () => {
     const hasEscape = 'fred, barney, & pebbles';
-
     it("단일 특수 문자를 올바르게 변환한다", () => {
       expect(escape("&")).toBe("&amp;");
       expect(escape("<")).toBe("&lt;");
@@ -70,6 +69,12 @@ describe("HTML 엔터티 변환 메서드", () => {
   it("빈 문자열인 경우 빈 문자열을 반환한다", () => {
     expect(escape("")).toBe("")
     expect(unescape("")).toBe("")
-  })
+  });
+
+  ["&#96;", "&#x2F;"].forEach((entity) => {
+    it(`should not unescape the "${entity}" entity`, () => {
+      expect(unescape(entity)).toBe(entity);
+    });
+  });
 });
 
