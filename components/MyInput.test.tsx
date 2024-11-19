@@ -1,3 +1,5 @@
+//https://github.com/codeit-bootcamp-frontend/FE-ADV-Practice/blob/3529907fe6869788137d7c0c245b10717d405cf2/components/MyInput.test.tsx
+
 import * as React from "react";
 import "@testing-library/jest-dom";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
@@ -6,9 +8,11 @@ import MyInput from "./MyInput";
 describe("MyInput", () => {
   it("should render correctly", () => {
     // MyInput 컴포넌트를 렌더링합니다.
-    // wrapper.unmount() 함수를 호출해도 에러가 발생하지 않는지 확인합니다.
+    // wrapper.unmount() 함수를 호출해도 에러가 발생하지 않는지 확인
+    // 이 테스트는 반드시 진행해야 한다.
     const { unmount } = render(<MyInput />);
-    unmount();
+    // 컴포넌트 언마운트(제거) 중 에러가 발생하지 않는지 확인
+    expect(() => unmount()).not.toThrow();
   });
 
   it("should clear the value and onClear is triggered", async () => {
@@ -35,6 +39,7 @@ describe("MyInput", () => {
       expect(inputElement).toHaveValue("");
     });
     await waitFor(() => {
+      expect(screen.getByDisplayValue("")).toBeTruthy();
       expect(onClearMock).toHaveBeenCalledTimes(1);
     });
   });
